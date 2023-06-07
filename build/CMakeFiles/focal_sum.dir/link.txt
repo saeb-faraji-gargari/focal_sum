@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/focal_sum.dir/src/main.cpp.o -o focal_sum  libfocal_sum_operation.a /usr/lib/libgdal.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so.1.74.0 

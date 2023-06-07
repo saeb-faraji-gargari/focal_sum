@@ -1,4 +1,0 @@
-/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20230606_focal_sum_rev2_git/install/bin/focal_sum
-/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20230606_focal_sum_rev2_git/install/lib/libfocal_sum_operation.a
-/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20230606_focal_sum_rev2_git/install/include/focal_sum.h
-/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20230606_focal_sum_rev2_git/install/test/focal_sum_test
