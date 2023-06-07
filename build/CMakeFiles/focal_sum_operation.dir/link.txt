@@ -1,0 +1,2 @@
+/usr/bin/ar qc libfocal_sum_operation.a CMakeFiles/focal_sum_operation.dir/src/focal_sum.cpp.o CMakeFiles/focal_sum_operation.dir/src/data_set.cpp.o
+/usr/bin/ranlib libfocal_sum_operation.a
