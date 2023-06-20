@@ -1,7 +1,8 @@
 
 build/
 install/
-source/CMakeLists.txt
+source/CMakeLists.*
+source/include\
 source/README.*
 .gitignore
 
