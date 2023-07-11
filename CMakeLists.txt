@@ -24,13 +24,6 @@ set_target_properties(
     io_operation focal_sum_operation PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
 )
 
-# set_target_properties( targets... PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-# LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib" RUNTIME_OUTPUT_DIRECTORY
-# "${CMAKE_BINARY_DIR}/bin" )
-
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "$<0:>${CMAKE_BINARY_DIR}/bin") # .exe and .dll
-# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "$<0:>${CMAKE_BINARY_DIR}/lib") # .so and .dylib
-# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "$<0:>${CMAKE_BINARY_DIR}/lib") # .lib and .a
 
 find_package(GDAL REQUIRED)
 
@@ -43,6 +36,8 @@ target_link_libraries(
 enable_testing()
 
 add_executable(focal_sum_test source/test.cpp)
+
+set_target_properties(focal_sum_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_test(NAME test_add COMMAND $<TARGET_FILE:focal_sum_test>)
 
