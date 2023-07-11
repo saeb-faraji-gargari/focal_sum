@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 
 project(focal_sum LANGUAGES CXX)
 
@@ -9,6 +9,8 @@ find_package(
 )
 
 add_executable(focal_sum source/main.cpp)
+
+set_target_properties(focal_sum PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_library(io_operation STATIC source/io.cpp source/raster.cpp)
 
@@ -21,8 +23,6 @@ target_include_directories(focal_sum_operation PUBLIC ${PROJECT_SOURCE_DIR}/incl
 set_target_properties(
     io_operation focal_sum_operation PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
 )
-
-set_target_properties(focal_sum PROPERTIES CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # set_target_properties( targets... PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 # LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib" RUNTIME_OUTPUT_DIRECTORY
