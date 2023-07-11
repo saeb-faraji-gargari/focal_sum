@@ -1,8 +1,15 @@
 #include <boost/program_options.hpp>
 
+#include <iostream>
+
 using namespace boost::program_options;
 
-#include "focal_sum.h"
+
+#include "dc/io.hpp"
+#include "dc/raster.hpp"
+
+#include "dc/focal_sum.hpp"
+
 
 int main(int argc, const char* argv[])
 {
@@ -20,7 +27,6 @@ int main(int argc, const char* argv[])
          "./focal_sum <input_file_name> <output_file_name>")("input,i", value(&input), "Input file")(
             "output,o", value(&output), "Output file");
 
-    // Configure options here
     positional_options_description positionals;
     positionals.add("input", 1).add("output", 1);
 
@@ -33,7 +39,7 @@ int main(int argc, const char* argv[])
     catch (const std::exception& e)
     {
 
-        std::cerr << "Error The command does NOT specify in correct way"
+        std::cerr << "Error The command is NOT specified in correct way"
                      "Enter '/.focal_sum -h/' for help"
                   << e.what() << std::endl;
 
@@ -47,11 +53,47 @@ int main(int argc, const char* argv[])
     else
     {
 
-        dc::Raster_data input_data = dc::read(input);
+        dc::GDALlibrary gdal{};
 
-        dc::Raster_data output_raster = dc::focal_sum(input_data, output);
+        dc::Raster input_raster;
+        dc::Raster output_raster;
 
-        // dc::write (output_raster, output);
+
+        try
+        {
+
+            input_raster = dc::read(input);
+        }
+
+        catch (const std::exception& e)
+        {
+
+            std::cerr << "An exception is happed for dc::read" << e.what() << std::endl;
+        }
+
+        try
+        {
+            output_raster = dc::focal_sum(input_raster);
+        }
+
+        catch (const std::exception& e)
+        {
+
+            std::cerr << "An exception is happed for dc::focal_sum" << e.what() << std::endl;
+        }
+
+
+        try
+        {
+
+            dc::write(output_raster, output);
+        }
+
+        catch (const std::exception& e)
+        {
+
+            std::cerr << "An exception is happed for dc::write" << e.what() << std::endl;
+        }
     }
 
     return 0;
