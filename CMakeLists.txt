@@ -41,8 +41,6 @@ set_target_properties(focal_sum_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE
 
 add_test(NAME test_add COMMAND $<TARGET_FILE:focal_sum_test>)
 
-set_target_properties(focal_sum_test PROPERTIES CMAKE_RUNTIME_OUTPUT_DIRECTORY ./BIN)
-
 include(GNUInstallDirs)
 
 install(TARGETS focal_sum DESTINATION ${CMAKE_INSTALL_BINDIR})
