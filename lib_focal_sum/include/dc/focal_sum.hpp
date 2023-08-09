@@ -1,11 +1,11 @@
 #ifndef __FOCAL_SUM_HPP
 #define __FOCAL_SUM_HPP
 
-#include "raster.hpp"
+#include "dc/raster.hpp"
 
 namespace dc {
- 
-    Raster focal_sum(Raster &);
+
+    const Raster focal_sum(Raster const&);
 
 }  // namespace dc
 
