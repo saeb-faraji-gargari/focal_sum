@@ -1,3 +1,3 @@
-# focal_sum
+# focal
 
-The second version of focal sum project. 2023,05,31. reading the data using set_data::read function.
+The focal project including focal_sum and focal_mean. 
