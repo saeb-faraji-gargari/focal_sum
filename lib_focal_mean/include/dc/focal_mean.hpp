@@ -6,7 +6,7 @@
 
 namespace dc {
 
-    const Raster focal_mean(Raster const&);
+    const Raster focal_mean(Raster const&, int const& window_size_x, int const& window_size_y);
 
 }
 

@@ -1,81 +1,54 @@
 
 #include "dc/focal_sum.hpp"
+#include "dc/neighborhood_node.hpp"
 #include "dc/raster.hpp"
+
 namespace dc {
-    
-    const Raster focal_sum(Raster const& input)
+
+    double sum_neighborhood(Raster const&, std::vector<int> const&);
+
+    const Raster focal_sum(Raster const& input, int const& window_size_x, int const& window_size_y)
     {
         int const ncols = input.size_x;
         int const nrows = input.size_y;
         Raster output(ncols, nrows);
-        for (std::size_t i = 0; i < (ncols * nrows); i++)
+
+        for (int i = 0; i < (ncols * nrows); i++)
         {
-            int mod_left = i % ncols;
-            int mod_right = (i + 1) % ncols;
-            if (i == 0)
-            {
-                output.value[i] = input.value[i] + input.value[i + 1] + input.value[i + 2] +
-                                  input.value[i + ncols] + input.value[i + 1 + ncols] +
-                                  input.value[i + 2 + ncols] + input.value[i + (2 * ncols)] +
-                                  input.value[i + 1 + (2 * ncols)] + input.value[i + 2 + (2 * ncols)];
-            }
-            else if (i == (ncols - 1))
-            {
-                output.value[i] = input.value[i] + input.value[i - 1] + input.value[i - 2] +
-                                  input.value[i + ncols] + input.value[i - 1 + ncols] +
-                                  input.value[i - 2 + ncols] + input.value[i + (2 * ncols)] +
-                                  input.value[i - 1 + (2 * ncols)] + input.value[i - 2 + (2 * ncols)];
-            }
-            else if (i == ((nrows - 1) * ncols))
-            {
-                output.value[i] = input.value[i] + input.value[i + 1] + input.value[i + 2] +
-                                  input.value[i - ncols] + input.value[i + 1 - ncols] +
-                                  input.value[i + 2 - ncols] + input.value[i - (2 * ncols)] +
-                                  input.value[i + 1 - (2 * ncols)] + input.value[i + 2 - (2 * ncols)];
-            }
-            else if (i == (ncols * nrows) - 1)
-            {
-                output.value[i] = input.value[i] + input.value[i - 1] + input.value[i - 2] +
-                                  input.value[i - ncols] + input.value[i - 1 - ncols] +
-                                  input.value[i - 2 - ncols] + input.value[i - (2 * ncols)] +
-                                  input.value[i - 1 - (2 * ncols)] + input.value[i - 2 - (2 * ncols)];
-            }
-            else if ((i >= 1) && (i <= ncols - 2))
-            {
-                output.value[i] = input.value[i] + input.value[i - 1] + input.value[i + 1] +
-                                  input.value[i + ncols] + input.value[i - 1 + ncols] +
-                                  input.value[i + 1 + ncols] + input.value[i + (2 * ncols)] +
-                                  input.value[i - 1 + (2 * ncols)] + input.value[i + 1 + (2 * ncols)];
-            }
-            else if ((i >= ((nrows - 1) * ncols) + 1) && (i <= (ncols * nrows) - 2))
-            {
-                output.value[i] = input.value[i] + input.value[i - 1] + input.value[i + 1] +
-                                  input.value[i - ncols] + input.value[i - 1 - ncols] +
-                                  input.value[i + 1 - ncols] + input.value[i - (2 * ncols)] +
-                                  input.value[i - 1 - (2 * ncols)] + input.value[i + 1 - (2 * ncols)];
-            }
-            else if (mod_left == 0)
-            {
-                output.value[i] = input.value[i] + input.value[i + 1] + input.value[i + 2] +
-                                  input.value[i - ncols] + input.value[i + 1 - ncols] +
-                                  input.value[i + 2 - ncols] + input.value[i + ncols] +
-                                  input.value[i + 1 + ncols] + input.value[i + 2 + ncols];
-            }
-            else if (mod_right == 0)
-            {
-                output.value[i] = input.value[i] + input.value[i - 1] + input.value[i - 2] +
-                                  input.value[i - ncols] + input.value[i - 1 - ncols] +
-                                  input.value[i - 2 - ncols] + input.value[i + ncols] +
-                                  input.value[i - 1 + ncols] + input.value[i - 2 + ncols];
-            }
-            else
-            {
-                output.value[i] = input.value[i] + input.value[i - 1] + input.value[i + 1] +
-                                  input.value[i - ncols] + input.value[i - 1 - ncols] +
-                                  input.value[i + 1 - ncols] + input.value[i + ncols] +
-                                  input.value[i - 1 + ncols] + input.value[i + 1 + ncols];
-            }
+
+            std::vector<int> neighborhood_node_ID =
+                neighborhood_node(ncols, nrows, window_size_x, window_size_y, i);
+
+            output.value[i] = sum_neighborhood(input, neighborhood_node_ID);
         }
+
         return output;
     }
+
+    double sum_neighborhood(Raster const& input, std::vector<int> const& neighborhood_node_ID)
+    {
+
+        double sum = 0.0;
+
+        double noData = input.noData_value;
+
+        for (std::size_t i = 0; i < neighborhood_node_ID.size(); i++)
+
+        {
+
+            if (input.value[neighborhood_node_ID[i]] == noData)
+            {
+                sum = noData;
+            }
+
+            else
+            {
+
+                sum = sum + input.value[neighborhood_node_ID[i]];
+            }
+        }
+
+        return sum;
+    }
+
 }  // namespace dc

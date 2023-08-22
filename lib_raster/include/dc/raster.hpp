@@ -11,12 +11,13 @@ namespace dc {
 
         private:
 
-            int num_x1, num_y1;
+            int num_x, num_y;
 
         public:
 
             int size_x;
             int size_y;
+            double noData_value;
             std::vector<float> value;
 
             Raster(int const num_x, int const num_y);

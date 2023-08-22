@@ -41,7 +41,7 @@ find_package(GDAL REQUIRED)
 
 target_link_libraries(io_operation PUBLIC raster_operation GDAL::GDAL)
 
-target_link_libraries(focal_sum_operation PUBLIC raster_operation)
+target_link_libraries(focal_sum_operation PUBLIC raster_operation neighborhood_operation)
 
 target_link_libraries(focal_mean_operation PUBLIC focal_sum_operation raster_operation)
 

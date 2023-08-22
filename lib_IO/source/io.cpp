@@ -32,6 +32,8 @@ namespace dc {
 
         double noData = poDataset->GetRasterBand(1)->GetNoDataValue();
 
+        input_raster.noData_value = noData;
+
         CPLErr result_read = poDataset->GetRasterBand(1)->RasterIO(
             GF_Read, 0, 0, ncols, nrows, input_raster.value.data(), ncols, nrows, GDT_Float32, 0, 0);
 
