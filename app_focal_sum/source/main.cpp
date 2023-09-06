@@ -4,16 +4,15 @@
 
 using namespace boost::program_options;
 
-
 #include "dc/io.hpp"
 #include "dc/raster.hpp"
 
 #include "dc/focal_sum.hpp"
 
+void focal_sum_operation(const std::string& input, const std::string& output);
 
 int main(int argc, const char* argv[])
 {
-
     std::string input;
     std::string output;
 
@@ -53,48 +52,27 @@ int main(int argc, const char* argv[])
     else
     {
 
-        dc::GDALlibrary gdal{};
-
-        dc::Raster input_raster;
-        dc::Raster output_raster;
-
+        dc::GDALLibrary gdal{};
 
         try
         {
 
-            input_raster = dc::read(input);
+            focal_sum_operation(input, output);
         }
-
         catch (const std::exception& e)
         {
 
-            std::cerr << "An exception is happed for dc::read" << e.what() << std::endl;
-        }
-
-        try
-        {
-            output_raster = dc::focal_sum(input_raster);
-        }
-
-        catch (const std::exception& e)
-        {
-
-            std::cerr << "An exception is happed for dc::focal_sum" << e.what() << std::endl;
-        }
-
-
-        try
-        {
-
-            dc::write(output_raster, output);
-        }
-
-        catch (const std::exception& e)
-        {
-
-            std::cerr << "An exception is happed for dc::write" << e.what() << std::endl;
+            std::cerr << "An exception is happed for " << e.what() << std::endl;
         }
     }
 
     return 0;
+}
+
+void focal_sum_operation(const std::string& input, const std::string& output)
+{
+
+    const dc::Raster input_raster = dc::read(input);
+    const dc::Raster output_raster = dc::focal_sum(input_raster);
+    dc::write(output_raster, output);
 }
