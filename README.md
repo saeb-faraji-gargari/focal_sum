@@ -1,3 +1,3 @@
 # focal
 
-The focal project including focal_sum and focal_mean.  
+The focal project including focal_sum and focal_mean. It is edited. 
