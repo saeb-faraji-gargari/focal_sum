@@ -1,3 +1,3 @@
-# focal_sum
 
-The second version of focal sum project .
+The focal project 20230906.
+
