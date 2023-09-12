@@ -5,7 +5,7 @@
 
 namespace dc {
 
-    const Raster focal_sum(Raster const&, int const&, int const&);
+    const Raster focal_sum(Raster const& input, int const window_size_x, int const window_size_y);
 
 }  // namespace dc
 

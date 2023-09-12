@@ -8,7 +8,11 @@
 
 namespace dc {
 
-    std::vector<int> neighborhood_node(int const&, int const&, int const&, int const&, int const&);
+    std::vector<int> neighborhood_node(int const ncols,
+                                       int const nrows,
+                                       int const window_size_x,
+                                       int const window_size_y,
+                                       int const node_ID);
 
 }
 

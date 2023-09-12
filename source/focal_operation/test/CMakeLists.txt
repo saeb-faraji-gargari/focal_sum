@@ -1,9 +1,8 @@
-find_package(Boost 1.40 REQUIRED COMPONENTS unit_test_framework)
 
 add_executable(neighborhood_test test_neighborhood_node.cpp)
-target_link_libraries(neighborhood_test PUBLIC Boost::unit_test_framework neighborhood_operation)
+target_link_libraries(neighborhood_test PRIVATE Boost::unit_test_framework focal_operation)
 add_test(NAME test_neighborhood_node COMMAND neighborhood_test)
 
 add_executable(focal_sum_test test_focal_sum.cpp)
-target_link_libraries(focal_sum_test PUBLIC focal_sum_operation)
+target_link_libraries(focal_sum_test PRIVATE Boost::unit_test_framework focal_operation)
 add_test(NAME test_focal_sum COMMAND focal_sum_test)

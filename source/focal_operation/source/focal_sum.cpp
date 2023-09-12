@@ -1,4 +1,3 @@
-
 #include "dc/focal_sum.hpp"
 #include "dc/neighborhood_node.hpp"
 #include "dc/raster.hpp"
@@ -7,7 +6,7 @@ namespace dc {
 
     double sum_neighborhood(Raster const&, std::vector<int> const&);
 
-    const Raster focal_sum(Raster const& input, int const& window_size_x, int const& window_size_y)
+    const Raster focal_sum(Raster const& input, int const window_size_x, int const window_size_y)
     {
         int const ncols = input.size_x;
         int const nrows = input.size_y;

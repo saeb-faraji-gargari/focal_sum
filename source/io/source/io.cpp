@@ -46,8 +46,6 @@ namespace dc {
         int const ncols = input_raster.size_x;
         int const nrows = input_raster.size_y;
 
-        std::unique_ptr<float[]> row_value(new float[ncols]);
-
         GDALDriver* pDriverTIFF = nullptr;
         pDriverTIFF = GetGDALDriverManager()->GetDriverByName("GTiff");
 

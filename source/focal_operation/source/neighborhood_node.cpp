@@ -1,15 +1,15 @@
 #include "dc/neighborhood_node.hpp"
 
-#include <iostream>  //   ---------------------------------------------
+#include <iostream>    
 
 namespace dc {
 
     std::vector<int> neighborhood_node(
-        int const& ncols,
-        int const& nrows,
-        int const& window_size_x,
-        int const& window_size_y,
-        int const& node_ID)
+        int const ncols,
+        int const nrows,
+        int const window_size_x,
+        int const window_size_y,
+        int const node_ID)
     {
         std::vector<int> neighborhood_ID(window_size_x * window_size_y);
 
@@ -26,21 +26,17 @@ namespace dc {
 
             int row_num_node = static_cast<int>(std::round(node_ID / ncols));
 
-            /*std::cout << "node_ID: " << node_ID << " i: " << i << " (node_ID - i): " << (node_ID - i)
-                      << " row_num_node: " << row_num_node
-                      << " (row_num_node * ncols): " << (row_num_node * ncols) << std::endl;*/
-
             if ((node_ID - i) < (row_num_node * ncols))
             {
                 node_ID_x[i] = i;
                 node_ID_x[i + iterations_x] =
-                    iterations_x + i;  // window_size_x + (-(node_ID - i - (row_num_node * ncols)));
+                    iterations_x + i;  
             }
             else if (node_ID + i > (((row_num_node + 1) * ncols) - 1))
             {
 
                 node_ID_x[i] =
-                    -iterations_x - i;  //-window_size_x - (node_ID + i - (((row_num_node + 1) * ncols) - 1));
+                    -iterations_x - i;  
                 node_ID_x[i + iterations_x] = -i;
             }
             else
@@ -50,15 +46,6 @@ namespace dc {
                 node_ID_x[i + iterations_x] = -i;
             }
         }
-
-        /*std::cout << "node_ID_x: " << std::endl;
-
-        for (int i = 0; i < node_ID_x.size(); ++i)
-        {
-            std::cout << node_ID_x[i] << " ";
-        }
-
-        std::cout << std::endl;*/
 
         node_ID_y[0] = node_ID;
 
