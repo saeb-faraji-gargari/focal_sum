@@ -31,7 +31,7 @@ namespace dc {
             ~GDALLibrary();
     };
 
-    const Raster read(std::string const&);
+    Raster read(std::string const&);
     void write(Raster const&, std::string const&);
 
 }  // namespace dc

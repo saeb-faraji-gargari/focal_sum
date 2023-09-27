@@ -6,6 +6,8 @@ namespace dc {
 
     {
 
+        double no_data = input.noData_value;
+
         const Raster sum = focal_sum(input, window_size_x, window_size_y);
 
         Raster mean(sum.size_x, sum.size_y);
@@ -14,7 +16,18 @@ namespace dc {
 
         {
 
-            mean.value[i] = sum.value[i] / (window_size_x * window_size_y);
+            if (sum.value[i] == no_data)
+
+            {
+
+                mean.value[i] == no_data;
+            }
+
+            else
+            {
+
+                mean.value[i] = sum.value[i] / (window_size_x * window_size_y);
+            }
         }
 
         return mean;

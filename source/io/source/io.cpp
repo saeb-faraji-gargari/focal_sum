@@ -1,5 +1,4 @@
 #include "dc/io.hpp"
-
 #include <iostream>
 
 namespace dc {
@@ -14,7 +13,7 @@ namespace dc {
         GDALDestroyDriverManager();
     }
 
-    const Raster read(std::string const& input_file)
+    Raster read(std::string const& input_file)
 
     {
 
@@ -24,14 +23,14 @@ namespace dc {
         {
             throw std::runtime_error("Unable to open input file : " + input_file);
         }
-
+        
+        
         int const ncols = poDataset->GetRasterXSize();
         int const nrows = poDataset->GetRasterYSize();
 
+        float noData = poDataset->GetRasterBand(1)->GetNoDataValue();
+
         Raster input_raster(ncols, nrows);
-
-        double noData = poDataset->GetRasterBand(1)->GetNoDataValue();
-
         input_raster.noData_value = noData;
 
         CPLErr result_read = poDataset->GetRasterBand(1)->RasterIO(

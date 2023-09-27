@@ -1,4 +1,5 @@
 #define BOOST_TEST_MODULE TestModuleNeighborhood
+
 #include <boost/test/unit_test.hpp>
 
 #include "dc/neighborhood_node.hpp"
