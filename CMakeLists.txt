@@ -5,6 +5,7 @@ project(focal_project LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
+
 find_package(Boost 1.40 REQUIRED COMPONENTS program_options unit_test_framework)
 find_package(GDAL REQUIRED)
 find_package(Doxygen REQUIRED)
@@ -20,3 +21,7 @@ install(TARGETS focal_sum DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 set(DOXYGEN_GENERATE_HTML YES)
 doxygen_add_docs(doc ${PROJECT_SOURCE_DIR})
+
+# Add the -pg flag to the compiler options
+add_compile_options(-pg)
+
