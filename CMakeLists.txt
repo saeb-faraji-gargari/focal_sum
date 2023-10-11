@@ -14,9 +14,9 @@ enable_testing()
 
 add_subdirectory(source)
 
-include(GNUInstallDirs)
+#include(GNUInstallDirs)
 
-install(TARGETS focal_sum DESTINATION ${CMAKE_INSTALL_BINDIR})
+#install(TARGETS focal_sum DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 set(DOXYGEN_GENERATE_HTML YES)
 doxygen_add_docs(doc ${PROJECT_SOURCE_DIR})

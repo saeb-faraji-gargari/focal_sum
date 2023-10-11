@@ -5,7 +5,8 @@
 #include <vector>
 
 namespace dc {
-
+    
+    template <typename T>
     class Raster
     {
 
@@ -17,11 +18,23 @@ namespace dc {
 
             int size_x;
             int size_y;
-            float noData_value {-88};
-            std::vector<float> value;
-
+            T noData_value {-88};
+            std::vector<T> value;
+            
             Raster(int const num_x, int const num_y);
     };
+
+
+    template <typename T>
+    Raster<T>::Raster(int const num_x, int const num_y):
+        size_x{num_x},
+        size_y{num_y}
+
+    {
+
+        value.resize(num_x * num_y);
+    }
+    
 
 }  // namespace dc
 

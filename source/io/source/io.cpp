@@ -13,53 +13,34 @@ namespace dc {
         GDALDestroyDriverManager();
     }
 
-    Raster read(std::string const& input_file)
-
+    std::string read_set_data_type(std::string const& input_file)
     {
-
         GDALDatasetPtr poDataset(static_cast<GDALDataset*>(GDALOpen(input_file.c_str(), GA_ReadOnly)));
 
-        if (!poDataset)
+        // Get the first raster band
+        GDALRasterBandH poBand = GDALGetRasterBand(poDataset.get(), 1);
+        // Get the data type of the band
+        GDALDataType gdalDataType = GDALGetRasterDataType(poBand);
+
+        switch (gdalDataType)
         {
-            throw std::runtime_error("Unable to open input file : " + input_file);
+            case GDT_Byte:
+                return "GDT_Byte";
+            case GDT_UInt16:
+                return "GDT_UInt16";
+            case GDT_Int16:
+                return "GDT_Int16";
+            case GDT_UInt32:
+                return "GDT_UInt32";
+            case GDT_Int32:
+                return "GDT_Int32";
+            case GDT_Float32:
+                return "GDT_Float32";
+            case GDT_Float64:
+                return "GDT_Float64";
+            default:
+                return "data_type_unknown";
         }
-        
-        
-        int const ncols = poDataset->GetRasterXSize();
-        int const nrows = poDataset->GetRasterYSize();
-
-        float noData = poDataset->GetRasterBand(1)->GetNoDataValue();
-
-        Raster input_raster(ncols, nrows);
-        input_raster.noData_value = noData;
-
-        CPLErr result_read = poDataset->GetRasterBand(1)->RasterIO(
-            GF_Read, 0, 0, ncols, nrows, input_raster.value.data(), ncols, nrows, GDT_Float32, 0, 0);
-
-        return input_raster;
-    }
-
-    void write(Raster const& input_raster, std::string const& output_file)
-    {
-
-        int const ncols = input_raster.size_x;
-        int const nrows = input_raster.size_y;
-
-        GDALDriver* pDriverTIFF = nullptr;
-        pDriverTIFF = GetGDALDriverManager()->GetDriverByName("GTiff");
-
-        GDALDatasetPtr pTiffDS(
-            pDriverTIFF->Create(output_file.c_str(), ncols, nrows, 1, GDT_Float32, nullptr));
-
-        if (pTiffDS == nullptr)
-        {
-            throw std::runtime_error("Unable to open output file to write : " + output_file);
-        }
-
-        std::vector<float> input_raster_data = input_raster.value;
-
-        CPLErr result_write = pTiffDS->GetRasterBand(1)->RasterIO(
-            GF_Write, 0, 0, ncols, nrows, input_raster_data.data(), ncols, nrows, GDT_Float32, 0, 0);
     }
 
 }  // namespace dc
