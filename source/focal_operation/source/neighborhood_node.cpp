@@ -4,18 +4,36 @@
 
 namespace dc {
 
-    std::vector<int> neighborhood_node(
+    void neighborhood_internal(int const ncols, int const window_size_x,int const window_size_y, std::vector<int> &neighborhood_ID_internal)
+    {
+
+        int iterations_x = static_cast<int>(std::round((window_size_x) / 2));
+        int iterations_y = static_cast<int>(std::round((window_size_y) / 2));
+
+        std::size_t i = 0;
+
+        for (int i_y = -iterations_y; i_y <= iterations_y; i_y++)
+        {
+
+            for (int i_x = -iterations_x; i_x <= iterations_x; i_x++)
+            {
+
+                neighborhood_ID_internal[i] = i_x + (i_y*ncols);
+                i = i + 1;
+            }
+        }
+
+    }
+
+
+    void neighborhood_node(
         int const ncols,
         int const nrows,
         int const window_size_x,
         int const window_size_y,
-        int const node_ID)
+        int const node_ID, std::vector<int> &node_ID_x, std::vector<int> &node_ID_y, std::vector<int> &neighborhood_ID)
     {
-        std::vector<int> neighborhood_ID(window_size_x * window_size_y);
-
-        std::vector<int> node_ID_x(window_size_x);
-        std::vector<int> node_ID_y(window_size_y);
-
+        
         std::size_t iterations_x = static_cast<std::size_t>(std::round((window_size_x) / 2));
         std::size_t iterations_y = static_cast<std::size_t>(std::round((window_size_y) / 2));
 
@@ -88,7 +106,6 @@ namespace dc {
             }
         }
 
-        return neighborhood_ID;
     }
 
 }  // namespace dc

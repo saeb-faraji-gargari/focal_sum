@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <ctime>
+
 using namespace boost::program_options;
 
 #include "dc/io.hpp"
@@ -24,8 +26,8 @@ int main(int argc, const char* argv[])
          "Help screen. This app takes a input data file and export an output "
          "data file calculating focal sum using a n*m window. To use app do: "
          "./focal_sum --input <input_file_name> --output <output_file_name> \"(n,m)\" or "
-         "./focal_sum <input_file_name> <output_file_name> \"(n,m)\" ")("input,i", value(&input), "Input file")(
-            "output,o", value(&output), "Output file")(
+         "./focal_sum <input_file_name> <output_file_name> \"(n,m)\" ")(
+            "input,i", value(&input), "Input file")("output,o", value(&output), "Output file")(
             "window_size,w", value(&window), "window_size in the format (n,m)");
 
     positional_options_description positionals;
@@ -80,6 +82,15 @@ void focal_sum_operation(
 {
 
     const dc::Raster input_raster = dc::read(input);
+
+    clock_t start = clock();
+
     const dc::Raster output_raster = dc::focal_sum(input_raster, window_size_x, window_size_y);
+    
+    clock_t stop = clock();
+    double duration = static_cast<double>(stop - start) / CLOCKS_PER_SEC;
+    std::cout << "Time taken by function: " << duration << " seconds" << std::endl;
+
+
     dc::write(output_raster, output);
 }

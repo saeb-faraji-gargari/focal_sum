@@ -1,6 +1,7 @@
 #include "dc/focal_sum.hpp"
 #include "dc/neighborhood_node.hpp"
 #include "dc/raster.hpp"
+#include <algorithm>
 #include <limits>
 
 namespace dc {
@@ -24,30 +25,45 @@ namespace dc {
 
         Raster output(ncols, nrows);
 
+        std::vector<int> neighborhood_ID(window_size_x * window_size_y, 0);
+        std::vector<int> node_ID_x(window_size_x, 0);
+        std::vector<int> node_ID_y(window_size_y, 0);
+
+        std::vector<int> neighborhood_ID_internal_source(window_size_x * window_size_y, 0);
+        std::vector<int> neighborhood_ID_internal(window_size_x * window_size_y, 0);
+        neighborhood_internal(ncols, window_size_x, window_size_y, neighborhood_ID_internal_source);
+
         for (int i = 0; i < (ncols * nrows); i++)
         {
 
-            std::vector<int> neighborhood_node_ID =
-                neighborhood_node(ncols, nrows, window_size_x, window_size_y, i);
+            for (std::size_t j = 0; j < neighborhood_ID_internal.size(); ++j)
+            {
+                neighborhood_ID_internal[j] = neighborhood_ID_internal_source[j] + i;
+            }
 
-            output.value[i] = sum_neighborhood(input, neighborhood_node_ID, no_data_value);
+            neighborhood_node(
+                ncols, nrows, window_size_x, window_size_y, i, node_ID_x, node_ID_y, neighborhood_ID);
+
+            output.value[i] = sum_neighborhood(input, neighborhood_ID, no_data_value);
         }
 
         return output;
     }
 
-    float sum_neighborhood(
-        Raster const& input, std::vector<int> const& neighborhood_node_ID, float const& no_data_value)
-    {
-        float max_range_value {std::numeric_limits<float>::max()};
-        float sum {0.0};
 
-        for (std::size_t i = 0; i < neighborhood_node_ID.size(); i++)
+    float sum_neighborhood(
+        Raster const& input, std::vector<int> const& neighborhood_ID, float const& no_data_value)
+    {
+        float max_range_value{std::numeric_limits<float>::max()};
+        float sum{0.0};
+
+        for (std::size_t i = 0; i < neighborhood_ID.size(); i++)
 
         {
-            float value_neighborhood_node = input.value[neighborhood_node_ID[i]];
+            float value_neighborhood_node = input.value[neighborhood_ID[i]];
 
-            if ((check_no_data(value_neighborhood_node, no_data_value)) || (std::isnan(value_neighborhood_node)))
+            if ((check_no_data(value_neighborhood_node, no_data_value)) ||
+                (std::isnan(value_neighborhood_node)))
             {
                 return no_data_value;
             }
@@ -57,7 +73,7 @@ namespace dc {
 
                 sum = sum_(sum, value_neighborhood_node);
 
-                if (check_out_of_range(sum,max_range_value))
+                if (check_out_of_range(sum, max_range_value))
                 {
                     return no_data_value;
                 }
