@@ -51,7 +51,7 @@ namespace dc {
                 }
                 else
                 {
-                    external_ID_vectro[k_internal] = (j * ncols) + i;
+                    external_ID_vectro[k_external] = (j * ncols) + i;
                     k_external++;
                 }
             }

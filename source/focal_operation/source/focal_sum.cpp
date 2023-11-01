@@ -4,6 +4,9 @@
 #include <algorithm>
 #include <limits>
 
+#include <iostream>
+
+
 namespace dc {
 
     float sum_neighborhood(
@@ -50,7 +53,7 @@ namespace dc {
             (ncols - (2 * window_size_half_x)) * (nrows - (2 * window_size_half_y)), 0);
 
         std::vector<int> external_ID_vectro(
-            (ncols * nrows) - ((2 * window_size_half_x) * (nrows - (2 * window_size_half_y))), 0);
+            (ncols * nrows) - internal_ID_vectro.size(), 0);
 
         internal_ID(ncols, nrows, window_size_x, window_size_y, internal_ID_vectro);
 
@@ -103,6 +106,11 @@ namespace dc {
             output.value[external_ID_vectro[i]] =
                 sum_neighborhood(input, neighborhood_ID, no_data_value, max_range_value);
         }
+        
+        std::cout << "ncols: " << ncols << std::endl;
+        std::cout << "nrows: " << nrows << std::endl;  
+        std::cout << "internal_ID_vectro.size: " << internal_ID_vectro.size() << std::endl; 
+        std::cout << "external_ID_vectro.size: " << external_ID_vectro.size() << std::endl; 
 
 
         return output;
@@ -130,7 +138,6 @@ namespace dc {
 
             else
             {
-
                 sum = sum_(sum, value_neighborhood_node);
 
                 if (check_out_of_range(sum, max_range_value))
