@@ -1,10 +1,68 @@
 #include "dc/neighborhood_node.hpp"
 
-#include <iostream>    
+#include <iostream>
 
 namespace dc {
 
-    void neighborhood_internal(int const ncols, int const window_size_x,int const window_size_y, std::vector<int> &neighborhood_ID_internal)
+    void internal_ID(
+        int const ncols,
+        int const nrows,
+        int const window_size_x,
+        int const window_size_y,
+        std::vector<int>& internal_ID_vectro)
+    {
+        int window_size_half_x = static_cast<int>(std::round((window_size_x) / 2));
+        int window_size_half_y = static_cast<int>(std::round((window_size_y) / 2));
+
+        int k = 0;
+        for (int j = window_size_half_y; j < nrows - window_size_half_y; j++)
+        {
+            for (int i = window_size_half_x; i < ncols - window_size_half_x; i++)
+            {
+                internal_ID_vectro[k] = (j * ncols) + i;
+                k++;
+            }
+        }
+    }
+
+    void internal_external_ID(
+        int const ncols,
+        int const nrows,
+        int const window_size_x,
+        int const window_size_y,
+        std::vector<int>& internal_ID_vectro,
+        std::vector<int>& external_ID_vectro)
+    {
+        int window_size_half_x = static_cast<int>(std::round((window_size_x) / 2));
+        int window_size_half_y = static_cast<int>(std::round((window_size_y) / 2));
+
+        int k_internal = 0;
+        int k_external = 0;
+
+        for (int j = 0; j < nrows; j++)
+        {
+            for (int i = 0; i < ncols; i++)
+            {
+                if ((j >= window_size_half_y) && (j < nrows - window_size_half_y) &&
+                    (i >= window_size_half_x) && (i < ncols - window_size_half_x))
+                {
+                    internal_ID_vectro[k_internal] = (j * ncols) + i;
+                    k_internal++;
+                }
+                else
+                {
+                    external_ID_vectro[k_internal] = (j * ncols) + i;
+                    k_external++;
+                }
+            }
+        }
+    }
+
+    void neighborhood_internal(
+        int const ncols,
+        int const window_size_x,
+        int const window_size_y,
+        std::vector<int>& neighborhood_ID_internal)
     {
 
         int iterations_x = static_cast<int>(std::round((window_size_x) / 2));
@@ -18,11 +76,10 @@ namespace dc {
             for (int i_x = -iterations_x; i_x <= iterations_x; i_x++)
             {
 
-                neighborhood_ID_internal[i] = i_x + (i_y*ncols);
+                neighborhood_ID_internal[i] = i_x + (i_y * ncols);
                 i = i + 1;
             }
         }
-
     }
 
 
@@ -31,9 +88,12 @@ namespace dc {
         int const nrows,
         int const window_size_x,
         int const window_size_y,
-        int const node_ID, std::vector<int> &node_ID_x, std::vector<int> &node_ID_y, std::vector<int> &neighborhood_ID)
+        int const node_ID,
+        std::vector<int>& node_ID_x,
+        std::vector<int>& node_ID_y,
+        std::vector<int>& neighborhood_ID)
     {
-        
+
         std::size_t iterations_x = static_cast<std::size_t>(std::round((window_size_x) / 2));
         std::size_t iterations_y = static_cast<std::size_t>(std::round((window_size_y) / 2));
 
@@ -47,14 +107,12 @@ namespace dc {
             if ((node_ID - i) < (row_num_node * ncols))
             {
                 node_ID_x[i] = i;
-                node_ID_x[i + iterations_x] =
-                    iterations_x + i;  
+                node_ID_x[i + iterations_x] = iterations_x + i;
             }
             else if (node_ID + i > (((row_num_node + 1) * ncols) - 1))
             {
 
-                node_ID_x[i] =
-                    -iterations_x - i;  
+                node_ID_x[i] = -iterations_x - i;
                 node_ID_x[i + iterations_x] = -i;
             }
             else
@@ -105,7 +163,6 @@ namespace dc {
                 i = i + 1;
             }
         }
-
     }
 
 }  // namespace dc

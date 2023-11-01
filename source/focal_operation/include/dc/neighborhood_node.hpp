@@ -7,6 +7,21 @@
 #include <cmath>
 
 namespace dc {
+    
+    void internal_ID(
+        int const ncols,
+        int const nrows,
+        int const window_size_x,
+        int const window_size_y,
+        std::vector<int>& internal_ID_vectro);
+
+    void internal_external_ID(
+        int const ncols,
+        int const nrows,
+        int const window_size_x,
+        int const window_size_y,
+        std::vector<int>& internal_ID_vectro,
+        std::vector<int>& external_ID_vectro);
 
     void neighborhood_internal(
         int const ncols,

@@ -45,6 +45,105 @@ BOOST_AUTO_TEST_CASE(test_neighborhood_internal_midle_point)
         output_exact.end());
 }
 
+
+BOOST_AUTO_TEST_CASE(test_internal_ID)
+{
+    //----------This test midle point neighborhood nodes for 3*3 window------------------------
+
+    BOOST_TEST_MESSAGE("Running test_midle_point");
+
+    int ncols = 10;
+    int nrows = 10;
+    int window_size_x = 3;
+    int window_size_y = 3;
+    // int node_ID = 55;
+
+    std::vector<int> result_neighborhood_ID(window_size_x * window_size_y, 0);
+    std::vector<int> node_ID_x(window_size_x, 0);
+    std::vector<int> node_ID_y(window_size_y, 0);
+
+    int window_size_half_x = static_cast<int>(std::round((window_size_x) / 2));
+    int window_size_half_y = static_cast<int>(std::round((window_size_y) / 2));
+
+    std::vector<int> internal_ID_vectro(
+        (ncols - (2 * window_size_half_x)) * (nrows - (2 * window_size_half_y)), 0);
+
+    dc::internal_ID(ncols, nrows, window_size_x, window_size_y, internal_ID_vectro);
+
+    std::vector<int> output_exact = {11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25, 26, 27, 28,
+                                     31, 32, 33, 34, 35, 36, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48,
+                                     51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 63, 64, 65, 66, 67, 68,
+                                     71, 72, 73, 74, 75, 76, 77, 78, 81, 82, 83, 84, 85, 86, 87, 88};
+
+    std::cout << "internal_ID_vectro: " << std::endl;
+    for (int element : internal_ID_vectro)
+    {
+        std::cout << element << ' ';
+    }
+    std::cout << std::endl;
+
+    BOOST_CHECK_EQUAL_COLLECTIONS(
+        internal_ID_vectro.begin(), internal_ID_vectro.end(), output_exact.begin(), output_exact.end());
+}
+
+BOOST_AUTO_TEST_CASE(test_internal_external_ID)
+{
+    //----------This test midle point neighborhood nodes for 3*3 window------------------------
+
+    BOOST_TEST_MESSAGE("Running test_midle_point");
+
+    int ncols = 10;
+    int nrows = 10;
+    int window_size_x = 3;
+    int window_size_y = 3;
+    // int node_ID = 55;
+
+    std::vector<int> result_neighborhood_ID(window_size_x * window_size_y, 0);
+    std::vector<int> node_ID_x(window_size_x, 0);
+    std::vector<int> node_ID_y(window_size_y, 0);
+
+    int window_size_half_x = static_cast<int>(std::round((window_size_x) / 2));
+    int window_size_half_y = static_cast<int>(std::round((window_size_y) / 2));
+
+    std::vector<int> internal_ID_vectro(
+        (ncols - (2 * window_size_half_x)) * (nrows - (2 * window_size_half_y)), 0);
+
+    std::vector<int> external_ID_vectro(
+        (ncols * nrows) - ((2 * window_size_half_x) * (nrows - (2 * window_size_half_y))), 0);
+
+    dc::internal_external_ID(
+        ncols, nrows, window_size_x, window_size_y, internal_ID_vectro, external_ID_vectro);
+
+    std::vector<int> output_exact_internal = {11, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25, 26, 27, 28,
+                                              31, 32, 33, 34, 35, 36, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48,
+                                              51, 52, 53, 54, 55, 56, 57, 58, 61, 62, 63, 64, 65, 66, 67, 68,
+                                              71, 72, 73, 74, 75, 76, 77, 78, 81, 82, 83, 84, 85, 86, 87, 88};
+
+    std::vector<int> output_exact_external = {0,  1,  3,  4,  5,  6,  7,  8,  9,  10, 19, 20,
+                                              29, 30, 39, 40, 49, 50, 59, 60, 69, 70, 70, 80,
+                                              89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99};
+
+    std::cout << "internal_ID_vectro: " << std::endl;
+    for (int element : internal_ID_vectro)
+    {
+        std::cout << element << ' ';
+    }
+    std::cout << std::endl;
+
+    std::cout << "output_exact_external: " << std::endl;
+    for (int element : output_exact_external)
+    {
+        std::cout << element << ' ';
+    }
+    std::cout << std::endl;
+
+    BOOST_CHECK_EQUAL_COLLECTIONS(
+        internal_ID_vectro.begin(),
+        internal_ID_vectro.end(),
+        output_exact_internal.begin(),
+        output_exact_internal.end());
+}
+
 BOOST_AUTO_TEST_CASE(test_midle_point)
 {
     //----------This test midle point neighborhood nodes for 3*3 window------------------------
