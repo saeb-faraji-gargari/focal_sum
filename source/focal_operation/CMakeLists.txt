@@ -4,7 +4,9 @@ add_library(focal_operation STATIC source/focal_sum.cpp
 target_include_directories(focal_operation
                            PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-target_link_libraries(focal_operation PUBLIC raster)
+#target_include_directories(focal_operation PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../lib_mdspan)						   
+
+target_link_libraries(focal_operation PUBLIC raster mdspan)
 
 add_executable(focal_sum source/main_sum.cpp)
 #add_executable(focal_mean source/main_mean.cpp)

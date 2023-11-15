@@ -6,8 +6,23 @@
 
 #include <iostream>
 
+//#include <span>
+#include "mdspan.hpp"
+
+namespace
+
+{
+
+    float sum_(float& argument_1, float& argument_2)
+
+    {
+        return argument_1 + argument_2;
+    }
+}  // namespace
+
 
 namespace dc {
+
 
     float sum_neighborhood(
         Raster const& input,
@@ -21,8 +36,6 @@ namespace dc {
         std::vector<int> const& neighborhood_ID_internal_source,
         float const& no_data_value,
         float const& max_range_value);
-
-    float sum_(float& argument_1, float& argument_2);
 
     bool check_no_data(float& argument, float const& no_data_value);
 
@@ -49,70 +62,56 @@ namespace dc {
         int window_size_half_x = static_cast<int>(std::round((window_size_x) / 2));
         int window_size_half_y = static_cast<int>(std::round((window_size_y) / 2));
 
-        std::vector<int> internal_ID_vectro(
+        std::vector<int> internal_node_ID(
             (ncols - (2 * window_size_half_x)) * (nrows - (2 * window_size_half_y)), 0);
 
-        std::vector<int> external_ID_vectro(
-            (ncols * nrows) - internal_ID_vectro.size(), 0);
+        std::vector<int> external_node_ID((ncols * nrows) - internal_node_ID.size(), 0);
 
-        internal_ID(ncols, nrows, window_size_x, window_size_y, internal_ID_vectro);
+        internal_ID(ncols, nrows, window_size_x, window_size_y, internal_node_ID);
 
         internal_external_ID(
-            ncols, nrows, window_size_x, window_size_y, internal_ID_vectro, external_ID_vectro);
+            ncols, nrows, window_size_x, window_size_y, internal_node_ID, external_node_ID);
 
 
         float max_range_value{std::numeric_limits<float>::max()};
 
-        /* for (int ID = 0; ID < (ncols * nrows); ID++)
+
+        for (int i = 0; i < internal_node_ID.size(); i++)
         {
-
-            if (std::find(internal_ID_vectro.begin(), internal_ID_vectro.end(), ID)
-        !=internal_ID_vectro.end())
-            {
-                output.value[ID] = sum_neighborhood_internal(
-                    input, ID, neighborhood_ID_internal_source, no_data_value, max_range_value);
-            }
-            else
-            {
-                neighborhood_node(
-                    ncols, nrows, window_size_x, window_size_y, ID, node_ID_x, node_ID_y, neighborhood_ID);
-
-                output.value[ID] = sum_neighborhood(input, neighborhood_ID, no_data_value, max_range_value);
-            }
-        } */
-
-        for (int i = 0; i < internal_ID_vectro.size(); i++)
-        {
-            output.value[internal_ID_vectro[i]] = sum_neighborhood_internal(
+            output.value[internal_node_ID[i]] = sum_neighborhood_internal(
                 input,
-                internal_ID_vectro[i],
+                internal_node_ID[i],
                 neighborhood_ID_internal_source,
                 no_data_value,
                 max_range_value);
         }
 
-        for (int i = 0; i < external_ID_vectro.size(); i++)
+        for (int i = 0; i < external_node_ID.size(); i++)
         {
             neighborhood_node(
                 ncols,
                 nrows,
                 window_size_x,
                 window_size_y,
-                external_ID_vectro[i],
+                external_node_ID[i],
                 node_ID_x,
                 node_ID_y,
                 neighborhood_ID);
 
-            output.value[external_ID_vectro[i]] =
+            output.value[external_node_ID[i]] =
                 sum_neighborhood(input, neighborhood_ID, no_data_value, max_range_value);
         }
-        
+
         std::cout << "ncols: " << ncols << std::endl;
-        std::cout << "nrows: " << nrows << std::endl;  
-        std::cout << "internal_ID_vectro.size: " << internal_ID_vectro.size() << std::endl; 
-        std::cout << "external_ID_vectro.size: " << external_ID_vectro.size() << std::endl; 
+        std::cout << "nrows: " << nrows << std::endl;
+        std::cout << "internal_ID_vectro.size: " << internal_node_ID.size() << std::endl;
+        std::cout << "external_ID_vectro.size: " << external_node_ID.size() << std::endl;
+        
+        std::mdspan output_2D{output.value.data(), nrows, ncols};
 
+        //std::cout << "output_2D(3,5): " << output_2D(3,5) << std::endl;
 
+        
         return output;
     }
 
@@ -124,6 +123,8 @@ namespace dc {
         float const& max_range_value)
     {
         float sum{0.0};
+
+        //for (const auto& i : neighborhood_ID_internal_source)
 
         for (std::size_t i = 0; i < neighborhood_ID_internal_source.size(); i++)
 
@@ -151,7 +152,7 @@ namespace dc {
     }
 
 
-    float sum_neighborhood(
+    inline float sum_neighborhood(
         Raster const& input,
         std::vector<int> const& neighborhood_ID,
         float const& no_data_value,
@@ -185,13 +186,7 @@ namespace dc {
         return sum;
     }
 
-    float sum_(float& argument_1, float& argument_2)
-
-    {
-        return argument_1 + argument_2;
-    }
-
-    bool check_no_data(float& argument, float const& no_data_value)
+    inline bool check_no_data(float& argument, float const& no_data_value)
 
     {
         if (argument == no_data_value)
@@ -204,7 +199,7 @@ namespace dc {
         }
     }
 
-    bool check_out_of_range(float& argument, float const& max_range_value)
+    inline bool check_out_of_range(float& argument, float const& max_range_value)
 
     {
         if (argument >= max_range_value)
