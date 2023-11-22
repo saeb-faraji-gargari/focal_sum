@@ -17,9 +17,8 @@ namespace dc {
 
             int size_x;
             int size_y;
-            float noData_value {-88};
+            float noData_value{-88};
             std::vector<float> value;
-
             Raster(int const num_x, int const num_y);
     };
 
