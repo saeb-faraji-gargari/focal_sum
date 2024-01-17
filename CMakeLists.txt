@@ -5,10 +5,6 @@ project(focal_project LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# set optimization flag
-set(CMAKE_CXX_FLAGS_DEBUG "-O0")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
-
 
 find_package(Boost 1.40 REQUIRED COMPONENTS program_options unit_test_framework)
 find_package(GDAL REQUIRED)

@@ -1,14 +1,10 @@
 #ifndef __io_HPP
 #define __io_HPP
-
 #include <gdal.h>
 #include <gdal_priv.h>
 //#include <ogrsf_frmts.h>
-
 #include "dc/raster.hpp"
-
 namespace dc {
-
     struct GDALDatasetDeleter
     {
             void operator()(::GDALDataset* dataset) const
@@ -19,21 +15,15 @@ namespace dc {
                 }
             }
     };
-
     using GDALDatasetPtr = std::unique_ptr<GDALDataset, GDALDatasetDeleter>;
-
     class GDALLibrary
     {
-
         public:
 
             GDALLibrary();
             ~GDALLibrary();
     };
-
-    Raster read(std::string const&);
-    void write(Raster const&, std::string const&);
-
+    Raster read(std::string const& input_file);
+    void write(Raster const& input_raster, std::string const& output_file);
 }  // namespace dc
-
 #endif

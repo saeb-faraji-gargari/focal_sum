@@ -1,0 +1,58 @@
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/focal_operation/source/focal_sum.cpp:9:11: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+    float sum_(float& argument_1, float& argument_2)
+    ~~~~~ ^
+    auto                                             -> float
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/focal_operation/source/focal_sum.cpp:15:17: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+    inline bool check_no_data(float& argument, float const& no_data_value)
+           ~~~~ ^
+           auto                                                            -> bool
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/focal_operation/source/focal_sum.cpp:26:17: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+    inline bool check_out_of_range(float& argument, float const& max_range_value)
+           ~~~~ ^
+           auto                                                                   -> bool
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/focal_operation/source/focal_sum.cpp:37:12: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+    Raster focal_sum(Raster const& input, int const window_size)
+    ~~~~~~ ^
+    auto                                                         -> Raster
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/focal_operation/source/focal_sum.cpp:44:14: error: use of class template 'std::mdspan' requires template arguments [clang-diagnostic-error]
+        std::mdspan input_2D{input.value.data(), nrows, ncols};
+             ^
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/lib_mdspan/mdspan.hpp:3105:7: note: template is declared here
+class mdspan
+      ^
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/focal_operation/source/focal_sum.cpp:45:14: error: use of class template 'std::mdspan' requires template arguments [clang-diagnostic-error]
+        std::mdspan output_2D{output.value.data(), nrows, ncols};
+             ^
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/lib_mdspan/mdspan.hpp:3105:7: note: template is declared here
+class mdspan
+      ^
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/focal_operation/source/main_sum.cpp:33:5: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+int main(int argc, const char* argv[])
+~~~ ^
+auto                                   -> int
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/lib_mdspan/mdspan.hpp:2798:20: error: template argument for non-type template parameter must be an expression [clang-diagnostic-error]
+  std::enable_if_t<std::is_same_v<_Mapping, typename layout_left_padded<_Mapping::padding_value>::template mapping<typename _Mapping::extents_type>>>>
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/type_traits:2578:17: note: template parameter is declared here
+  template<bool _Cond, typename _Tp = void>
+                ^
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/lib_mdspan/mdspan.hpp:2798:25: error: no template named 'is_same_v' in namespace 'std'; did you mean 'is_same'? [clang-diagnostic-error]
+  std::enable_if_t<std::is_same_v<_Mapping, typename layout_left_padded<_Mapping::padding_value>::template mapping<typename _Mapping::extents_type>>>>
+                   ~~~~~^~~~~~~~~
+                        is_same
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/type_traits:1404:12: note: 'is_same' declared here
+    struct is_same
+           ^
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/lib_mdspan/mdspan.hpp:2812:20: error: template argument for non-type template parameter must be an expression [clang-diagnostic-error]
+  std::enable_if_t<std::is_same_v<_Mapping, typename layout_right_padded<_Mapping::padding_value>::template mapping<typename _Mapping::extents_type>>>>
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/type_traits:2578:17: note: template parameter is declared here
+  template<bool _Cond, typename _Tp = void>
+                ^
+/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240108_focal_sum_git/source/lib_mdspan/mdspan.hpp:2812:25: error: no template named 'is_same_v' in namespace 'std'; did you mean 'is_same'? [clang-diagnostic-error]
+  std::enable_if_t<std::is_same_v<_Mapping, typename layout_right_padded<_Mapping::padding_value>::template mapping<typename _Mapping::extents_type>>>>
+                   ~~~~~^~~~~~~~~
+                        is_same
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/type_traits:1404:12: note: 'is_same' declared here
+    struct is_same
+           ^
