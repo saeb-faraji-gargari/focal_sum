@@ -1,0 +1,65 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 1
+    },
+    "configurePresets": [
+        {
+            "name": "ninja",
+            "generator": "Ninja",
+            "displayName": "Ninja Debug",
+            "binaryDir": "${sourceDir}/build/ninja"
+        },
+        {
+            "name": "gprof_pg_flag",
+            "inherits": "ninja",
+            "binaryDir": "${sourceDir}/build/gprof_pg_flag",
+            "displayName": "gprof",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                //    "CMAKE_C_FLAGS": "-pg",
+                "CMAKE_CXX_FLAGS": "-pg"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "ninja",
+            //"hidden": true,
+            "configurePreset": "ninja",
+            "configuration": "Release"
+        },
+        {
+            "name": "gprof_pg_flag",
+            //"hidden": true,
+            "configurePreset": "gprof_pg_flag",
+            "configuration": "Release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "test_ninja",
+            "configurePreset": "ninja",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        },
+        {
+            "name": "test_gprof_pg_flag",
+            "configurePreset": "gprof_pg_flag",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        }
+    ]
+}

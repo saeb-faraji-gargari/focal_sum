@@ -1,0 +1,118 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v3.2.0
+  hooks:
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+  # - id: check-yaml
+  - id: check-added-large-files
+- repo: https://github.com/psf/black
+  rev: 22.12.0
+  hooks:
+  - id: black
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.0.0
+  hooks:
+  - id: mypy
+    # args: [--verbose]
+    language: system  # Use interpreter in environment
+- repo: https://github.com/pycqa/isort
+  rev: 5.12.0
+  hooks:
+  - id: isort
+    files: |
+      (?x)^(
+        .*\.py|
+        .*\.py.in|
+      )$
+
+- repo: local
+  hooks:
+  - id: cmake-format
+    name: cmake-format
+    entry: cmake-format
+    language: system
+    files: CMakeLists\.txt$
+#args: [--indent-width=4]
+#  - id: clang-tidy
+#    name: clang-tidy
+#    entry: clang-tidy
+#    language: system  
+
+#  - id: run-clang-tidy
+#    name: Run_clang-tidy checks
+#    entry: ./run_clang_tidy.sh
+#    language: system
+
+  #- id: clang-format
+    #name: clang-format
+    #entry: clang-format
+    #args: [--style, /home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240119_focal_sum/.clang-format , -i]
+    #language: system
+    #files: ^source/focal_operation/source/.*\.(c|cpp|h)$
+   # pass_filenames: false
+    #additional_dependencies: [.clang-format] 
+    
+#  - id: clang-format
+#    name: clang-format
+#    description: ''
+#    entry: clang-format -i
+#    language: system
+#    'types_or': [c++, c, c#, cuda, java, javascript, json, objective-c, proto, textproto]
+    #args: ["-style=file"]
+    #args: ["-style=.clang-format"]
+#    args: ["-style=/home/saeb/focal_sum_project/test_GDAL_and_command_line_argument/20240119_focal_sum/.clang-format"]
+#    files: source/focal_operation/source/*
+#    require_serial: false
+    #additional_dependencies: []
+    #minimum_pre_commit_version: '2.9.2'
+
+#  - id: run-clang-format
+#    name: Run clang-format checks
+#    entry: ./run_clang_format.sh
+#    language: system 
+
+- repo: https://github.com/pocc/pre-commit-hooks
+  rev: v1.3.5
+  hooks:
+  - id: clang-format
+    args: [--style=file, -i]
+  - id: clang-tidy
+    args: [--quiet]
+    #entry: entry: bash -c 'clang-tidy -p build/compile_commands.json source/focal_operation/source/*.cpp > clang-tidy-report.txt 2>&1 || exit 0'  
+    
+      
+#    types: [cpp]
+   
+ #files: .\.(c|cpp|h)$
+ # Skipping lue/framework for now because of issues with using clang icw build setup for gcc
+ # Also skipping a few other files (unused ones, ...)
+  #   exclude: |
+  #     (?x)^(
+  #       source/command/.*|
+  #       source/data_model/test/include/lue/test/print.hpp|
+  #       source/data_model/translate/include/lue/translate/command.hpp|
+  #       source/data_model/translate/include/lue/translate/format.hpp|
+  #       source/data_model/translate/include/lue/translate/format/gdal_stack.hpp|
+  #       source/data_model/translate/include/lue/translate/format/gdal_stacks.hpp|
+  #       source/data_model/translate/src/format/gdal_stack.cpp|
+  #       source/data_model/translate/src/format/gdal_stacks.cpp|
+  #       source/data_model/translate/src/format/geo_eas.cpp|
+  #       source/data_model/utility/include/lue/utility/utility.hpp|
+  #       source/framework/.*|
+  #       source/framework/algorithm/benchmark/.*|
+  #       source/framework/benchmark/.*|
+  #       source/framework/case_study/.*|
+  #       source/imgui/main.cpp|
+  #       source/view/vulkan/.*|
+  #       source/view/view/src/vulkan_application.cpp|
+  #     )$
+
+#- repo: https://github.com/lorenzwalthert/precommit
+#  rev: v0.4.0
+#  hooks:
+#  - id: spell-check
+
+

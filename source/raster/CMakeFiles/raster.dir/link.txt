@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libraster.a CMakeFiles/raster.dir/source/raster.cpp.o
+/usr/bin/ranlib ../../lib/libraster.a

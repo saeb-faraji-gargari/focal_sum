@@ -1,4 +1,9 @@
-Checks: '-*,modernize-*'
+Checks: '-*bugprone-*,
+    cppcoreguidelines-*,
+    modernize-*,
+    performance-*,
+    readability-*'
+    
 CheckOptions:
   - { key: modernize-loop-convert.MinConfidence, value: reasonable }
 

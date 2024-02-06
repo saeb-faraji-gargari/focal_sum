@@ -5,7 +5,6 @@
 #include "dc/neighborhood_node.hpp"
 #include <iostream>
 
-
 BOOST_AUTO_TEST_CASE(test_neighborhood_internal_midle_point)
 {
     //----------This test midle point neighborhood nodes for 3*3 window------------------------
@@ -44,7 +43,6 @@ BOOST_AUTO_TEST_CASE(test_neighborhood_internal_midle_point)
         output_exact.begin(),
         output_exact.end());
 }
-
 
 BOOST_AUTO_TEST_CASE(test_internal_ID)
 {

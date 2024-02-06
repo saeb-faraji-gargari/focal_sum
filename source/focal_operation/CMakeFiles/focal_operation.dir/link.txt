@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../lib/libfocal_operation.a CMakeFiles/focal_operation.dir/source/focal_sum.cpp.o CMakeFiles/focal_operation.dir/source/neighborhood_node.cpp.o
+/usr/bin/ranlib ../../lib/libfocal_operation.a

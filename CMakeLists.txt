@@ -10,7 +10,6 @@ find_package(Boost 1.40 REQUIRED COMPONENTS program_options unit_test_framework)
 find_package(GDAL REQUIRED)
 find_package(Doxygen REQUIRED)
 
-
 enable_testing()
 
 add_subdirectory(source)
@@ -24,4 +23,3 @@ doxygen_add_docs(doc ${PROJECT_SOURCE_DIR})
 
 # Add the -pg flag to the compiler options
 add_compile_options(-pg)
-
