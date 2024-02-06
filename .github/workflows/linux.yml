@@ -1,0 +1,28 @@
+name: Linux CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup CMake
+      uses: actions/setup-cmake@v2
+      with:
+        cmake-version: '3.21'
+
+    - name: Configure
+      run: cmake --preset=gprof_pg_flag -DCMAKE_INSTALL_PREFIX=install_gprof
+
+    - name: Build
+      run: cmake --build --preset=gprof_pg_flag --target install
+
+    - name: Run Tests
+      run: ctest --preset test_gprof_pg_flag
