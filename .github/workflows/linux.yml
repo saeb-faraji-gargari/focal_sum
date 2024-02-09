@@ -23,7 +23,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
-    name: ${{ matrix.os }};${{ matrix.compiler.cxx }};qt5-${{ matrix.qt6 }}
+    name: ${{ matrix.os }};${{ matrix.compiler.cxx }}   #; #qt5-${{ matrix.qt6 }}
     
     timeout-minutes: 20
 
