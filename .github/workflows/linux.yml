@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]   #ubuntu-latest
-        qt6: ["ON", "OFF"]
+        #qt6: ["ON", "OFF"]
         compiler:
           - { cc: gcc-11, cxx: g++-11 }
           - { cc: gcc-13, cxx: g++-13 }
