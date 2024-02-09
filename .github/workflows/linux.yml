@@ -32,7 +32,13 @@ jobs:
     - name: Install configure system
       run: |
         sudo apt update
-        sudo apt install ${{ matrix.compiler.cc }} ninja-build cmake libgdal-dev libboost-all-dev
+        sudo apt install \
+        ${{ matrix.compiler.cc }} \
+        ninja-build \
+        cmake \
+        libgdal-dev \
+        libboost-all-dev \
+        doxygen
     
     - name: Checkout code
       uses: actions/checkout@v2
